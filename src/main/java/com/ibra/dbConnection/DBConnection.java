@@ -44,9 +44,6 @@ public class DBConnection {
         }
     }
 
-    /**
-     * Closes the database connection if it is open
-     */
     public static void closeConnection() {
         try {
             if (connection != null && !connection.isClosed()) {

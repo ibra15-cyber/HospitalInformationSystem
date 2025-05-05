@@ -3,15 +3,23 @@ package com.ibra;
 import com.ibra.dbConnection.DBConnection;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
         try {
             Connection conn = DBConnection.getConnection();
-            System.out.println(conn);
+            Statement  stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from employee");
+            while (rs.next()) {
+                int id = rs.getInt("emp_id");
+                String surname = rs.getString("surname");
+                String firstname = rs.getString("first_name");
+                System.out.println(id + " "+ surname + " " + firstname );
+
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
