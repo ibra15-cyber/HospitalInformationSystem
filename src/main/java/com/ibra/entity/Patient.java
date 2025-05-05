@@ -7,6 +7,8 @@ public class Patient {
     private String address;
     private String telephone;
 
+    public Patient() {
+    }
 
     public Patient(int patientId, String surname, String firstName, String address, String telephone) {
         this.patientId = patientId;
