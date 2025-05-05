@@ -1,27 +1,36 @@
 package com.ibra;
 
 import com.ibra.dbConnection.DBConnection;
+import com.ibra.entity.Patient;
+import com.ibra.service.PatientService;
+import com.ibra.service.PatientServiceImp;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            Connection conn = DBConnection.getConnection();
-            Statement  stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from employee");
-            while (rs.next()) {
-                int id = rs.getInt("emp_id");
-                String surname = rs.getString("surname");
-                String firstname = rs.getString("first_name");
-                System.out.println(id + " "+ surname + " " + firstname );
+                PatientService patientService = new PatientServiceImp();
 
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+                Patient newPatient = new Patient();
+                newPatient.setFirstName("John");
+                newPatient.setSurname("Doe");
+                newPatient.setAddress("Accra New Town");
+                newPatient.setTelephone("555-123-4567");
+
+                int patientId = patientService.addPatient(newPatient);
+
+                System.out.println(patientId);
+
+                // Get all patients
+                List<Patient> allPatients = patientService.getAllPatients();
+                for (Patient p : allPatients) {
+                    System.out.println(p.getPatientId()+ " " + p.getFirstName() + " " + p.getSurname());
+                }
         } finally {
             DBConnection.closeConnection();
         }

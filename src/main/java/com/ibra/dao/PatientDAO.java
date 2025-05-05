@@ -3,12 +3,16 @@ package com.ibra.dao;
 
 import com.ibra.dbConnection.DBConnection;
 import com.ibra.entity.Patient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PatientDAO {
+
+    private static final Logger logger = LoggerFactory.getLogger(PatientDAO.class);
 
     public int insertPatient(Patient patient) {
         String sql = "INSERT INTO Patient (surname, first_name, address, telephone) VALUES (?, ?, ?, ?)";
@@ -24,6 +28,7 @@ public class PatientDAO {
             int affectedRows = pstmt.executeUpdate();
 
             if (affectedRows == 0) {
+                logger.error("Patient insert failed");
                 throw new SQLException("Creating patient failed, no rows affected.");
             }
 
@@ -32,11 +37,13 @@ public class PatientDAO {
                     patient.setPatientId(generatedKeys.getInt(1));
                     return patient.getPatientId();
                 } else {
+                    logger.error("Patient insert failed");
                     throw new SQLException("Creating patient failed, no ID obtained.");
                 }
             }
         } catch (SQLException e) {
             System.err.println("Error inserting patient: " + e.getMessage());
+            logger.error("Error inserting patient: " + e.getMessage());
             return -1;
         }
     }
@@ -73,7 +80,7 @@ public class PatientDAO {
                 patients.add(mapResultSetToPatient(rs));
             }
         } catch (SQLException e) {
-            System.err.println("Error retrieving patients: " + e.getMessage());
+            logger.error("Error retrieving patients: " + e.getMessage());
         }
 
         return patients;
@@ -95,7 +102,7 @@ public class PatientDAO {
             int affectedRows = pstmt.executeUpdate();
             return affectedRows > 0;
         } catch (SQLException e) {
-            System.err.println("Error updating patient: " + e.getMessage());
+            logger.error("Error updating patient: " + e.getMessage());
             return false;
         }
     }
@@ -111,7 +118,7 @@ public class PatientDAO {
             int affectedRows = pstmt.executeUpdate();
             return affectedRows > 0;
         } catch (SQLException e) {
-            System.err.println("Error deleting patient: " + e.getMessage());
+            logger.error("Error deleting patient: " + e.getMessage());
             return false;
         }
     }
@@ -133,7 +140,7 @@ public class PatientDAO {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error searching patients: " + e.getMessage());
+            logger.error("Error searching patients: " + e.getMessage());
         }
 
         return patients;
