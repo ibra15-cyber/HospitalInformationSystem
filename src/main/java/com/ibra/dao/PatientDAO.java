@@ -14,7 +14,7 @@ public class PatientDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(PatientDAO.class);
 
-    public int insertPatient(Patient patient) {
+    public Patient insertPatient(Patient patient) {
         String sql = "INSERT INTO Patient (surname, first_name, address, telephone) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DBConnection.getConnection();
@@ -35,7 +35,7 @@ public class PatientDAO {
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     patient.setPatientId(generatedKeys.getInt(1));
-                    return patient.getPatientId();
+                    return patient;
                 } else {
                     logger.error("Patient insert failed");
                     throw new SQLException("Creating patient failed, no ID obtained.");
@@ -44,7 +44,7 @@ public class PatientDAO {
         } catch (SQLException e) {
             System.err.println("Error inserting patient: " + e.getMessage());
             logger.error("Error inserting patient: " + e.getMessage());
-            return -1;
+            return null;
         }
     }
 

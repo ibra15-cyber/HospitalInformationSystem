@@ -18,15 +18,15 @@ public class PatientServiceImp implements PatientService {
     }
 
     @Override
-    public int addPatient(Patient patient) {
+    public Patient addPatient(Patient patient) {
         if (isNullOrEmpty(patient.getSurname()) || isNullOrEmpty(patient.getFirstName())) {
             logger.error("Patient first name and surname are required");
-            return -1;
+            return null;
         }
 
         if (isNullOrEmpty(patient.getTelephone())) {
             logger.error("Patient telephone is required");
-            return -1;
+            return null;
         }
 
         return patientDAO.insertPatient(patient);
