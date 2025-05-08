@@ -36,3 +36,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+git_workflow.txt
+git_command2

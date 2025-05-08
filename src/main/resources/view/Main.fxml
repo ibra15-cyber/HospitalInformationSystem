@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.ibra.frontend.controller.MainController"
+            prefHeight="600.0" prefWidth="800.0">
+
+    <top>
+        <MenuBar>
+            <Menu text="File">
+                <MenuItem text="Exit" onAction="#handleExit"/>
+            </Menu>
+            <Menu text="Entities">
+                <MenuItem text="Patients" onAction="#openPatientView"/>
+                <MenuItem text="Doctors" onAction="#openDoctorView"/>
+                <MenuItem text="Nurses" onAction="#openNurseView"/>
+                <MenuItem text="Departments" onAction="#openDepartmentView"/>
+                <MenuItem text="Wards" onAction="#openWardView"/>
+                <MenuItem text="Hospitalizations" onAction="#openHospitalizationView"/>
+            </Menu>
+            <Menu text="Help">
+                <MenuItem text="About" onAction="#showAbout"/>
+            </Menu>
+        </MenuBar>
+    </top>
+
+    <center>
+        <StackPane fx:id="contentArea">
+            <VBox alignment="CENTER" spacing="20">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <Label text="Hospital Information System" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+                <Label text="Select an entity from the Entities menu to manage" style="-fx-font-size: 16px;"/>
+                <HBox alignment="CENTER" spacing="20">
+                    <Button text="Manage Patients" onAction="#openPatientView" prefWidth="150"/>
+                    <Button text="Manage Doctors" onAction="#openDoctorView" prefWidth="150"/>
+                    <Button text="Manage Nurses" onAction="#openNurseView" prefWidth="150"/>
+                </HBox>
+                <HBox alignment="CENTER" spacing="20">
+                    <Button text="Manage Departments" onAction="#openDepartmentView" prefWidth="150"/>
+                    <Button text="Manage Wards" onAction="#openWardView" prefWidth="150"/>
+                    <Button text="Manage Hospitalizations" onAction="#openHospitalizationView" prefWidth="150"/>
+                </HBox>
+            </VBox>
+        </StackPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #f0f0f0; -fx-padding: 5px;">
+            <Label text="Hospital Information System v1.0"/>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Label fx:id="statusLabel" text="Ready"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
