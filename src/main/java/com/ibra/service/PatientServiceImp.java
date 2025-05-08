@@ -9,7 +9,7 @@ import java.util.List;
 
 
 public class PatientServiceImp implements PatientService {
-    private final PatientDAO patientDAO;
+    private PatientDAO patientDAO;
     private static final Logger logger = LoggerFactory.getLogger(PatientService.class);
 
 
@@ -42,6 +42,7 @@ public class PatientServiceImp implements PatientService {
         return patientDAO.getPatientById(patientId);
     }
 
+    @Override
     public List<Patient> getAllPatients() {
         return patientDAO.getAllPatients();
     }
@@ -59,7 +60,7 @@ public class PatientServiceImp implements PatientService {
         }
 
         if (isNullOrEmpty(patient.getTelephone())) {
-            System.err.println("Patient telephone is required");
+            logger.error("Patient telephone is required");
             return false;
         }
 
@@ -69,7 +70,7 @@ public class PatientServiceImp implements PatientService {
     @Override
     public boolean deletePatient(int patientId) {
         if (patientId <= 0) {
-            System.err.println("Invalid patient ID");
+            logger.error("Invalid patient ID");
             return false;
         }
 
